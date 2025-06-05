@@ -32,8 +32,10 @@ def upgrade() -> None:
     password_hash = get_password_hash("admin123")
     
     op.execute(
-        f"INSERT INTO user (role, email, username, password_hash, disabled, created_at) VALUES "
-        f"('admin', 'admin@example.com', 'admin123', '{password_hash}', false, NOW())"
+        f"""
+        INSERT INTO "user" (role, email, username, password_hash, disabled, created_at)
+        VALUES ('admin', 'admin@example.com', 'admin123', '{password_hash}', false, NOW())
+        """
     )
 
     op.create_table(
