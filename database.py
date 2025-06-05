@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 from fastapi import Depends
 
-SQLALCHEMY_DATABASE_URL = "mysql+pymysql://root:root@database:3306/waitkue"
+SQLALCHEMY_DATABASE_URL = "postgresql://waitkue_user:nxVnolHVKnoZpt8Ge9R1LNKXm17tPBLp@dpg-d10nbjumcj7s73bsf6pg-a/waitkue"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL 
