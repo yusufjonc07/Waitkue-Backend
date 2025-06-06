@@ -19,10 +19,10 @@ async def get_queues_reports(year: int, db: Session = Depends(get_db)):
     
     queues = db.query(
         func.count(Queue.id).label("tickets"),
-       func.MONTH(Queue.created_at).label("month")
+       func.extract('month', Queue.created_at).label("month")
     ).select_from(Queue).filter(
-        func.year(Queue.created_at) == year
-    ).group_by(func.month(Queue.created_at)).all()
+        func.extract('year', Queue.created_at) == year
+    ).group_by(func.extract('month', Queue.created_at)).all()
     
     
      # Convert to dict: {month_number: ticket_count}
